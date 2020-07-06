@@ -19,7 +19,7 @@ function whatShouldICallYou(myAge, myGender, yourAge, yourGender) {
           return "누나"
         }
       }
-      else {
+      else { 
         if (yourGender === 'male') {
           return "오빠"
         }
