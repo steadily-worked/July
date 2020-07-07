@@ -18,4 +18,4 @@ function getSecondBiggestNumber(arr) {
   console.log(getSecondBiggestNumber([80, 2, 44, 21, 92, 3, 51]));
   console.log(getSecondBiggestNumber([4, 7, 6, 5]));
 
-  // 주어진 수들 중에서 두 번째로 높은 수를 찾는 문제이다. 처음엔 못풀었음..
+  // 주어진 수들 중에서 두 번째로 높은 수를 찾는 문제이다. 처음엔 못풀었음...
