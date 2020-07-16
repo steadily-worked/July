@@ -732,3 +732,802 @@ console.log(numbers.sum);
 
 이런 식으로 Getter 함수는 특정 값을 조회할 때 우리가 설정한 함수로 연산된 값을 반환한다.
 
+다음은 set 함수이다.
+
+const numbers = {
+
+  _a: 1,
+
+  _b: 2,
+
+  sum: 3,
+
+  calculate() {
+
+    console.log('calculate');
+
+    this.sum = this._a + this._b;
+
+  },
+
+  get a() {
+
+    return this._a;
+
+  },
+
+  get b() {
+
+    return this._b;
+
+  },
+
+  set a(value) {
+
+    console.log('a가 바뀝니다.');
+
+    this._a = value;
+
+    this.calculate();
+
+  },
+
+  set b(value) {
+
+    console.log('b가 바뀝니다.');
+
+    this._b = value;
+
+    this.calculate();
+
+  }
+
+};
+
+console.log(numbers.sum);
+
+numbers.a = 5;
+
+numbers.b = 7;
+
+numbers.a = 9;
+
+console.log(numbers.sum);
+
+console.log(numbers.sum);
+
+console.log(numbers.sum);
+
+
+-> 3, 'a가 바뀝니다.', 'calculate', 'b가 바뀝니다.', 'calculate', 'a가 바뀝니다.', 'calculate', 16, 16 ,16
+
+이 순서대로 출력된다.
+
+setter 함수를 설정할 때에는 함수의 앞부분에 set 키워드를 붙인다.
+
+setter 함수를 설정하고 나면, {'numbers.a = 5'} 이렇게 값을 설정했을 때 5를 함수의 파라미터로 받아오게 된다. 위 코드에서는 객체 안에 _a, _b라는 숫자를 선언해주고, 이 값들을 위한 Getter 함수와 Setter 함수를 설정해줬다.
+
+이전의 객체에서는 nubmers.sum이 조회될 때마다 덧셈이 이루어 졌었지만, 이제는 <b>a 혹은 b의 값이 바뀔 때마다 sum 값을 연산</b>한다.
+
+
+<b> * #배열 </b>
+
+이전에 배운 객체는, 한 변수 혹은 상수(ex. a나 b 등)에 여러가지 정보를 담기 위함이었다면, <b>배열은 여러 개의 항목들이 들어있는 리스트</b>와 같다.
+
+<b> 1. 배열의 기본 </b>
+
+예를 들어) 숫자 배열을 선언해보자.
+
+const array = [1, 2, 3, 4, 5];
+
+배열을 선언 할 때에는 이렇게 [] 안에 감싸주면 된다.
+
+배열 안에는 어떤 값이든 넣을 수 있다.
+
+예를 들어) 객체 배열을 만들어보자.
+
+const objects = [{ name: '멍멍이' }, { name: '야옹이' }];
+
+배열을 선언하고 나서, n번째 항목을 조회하고 싶을 땐 다음과 같이 할 수 있다.
+
+objects[n]; 여기서도 0부터 시작된다는 점을 잊지 말자.
+
+const objects = [{ name: '멍멍이' }, { name: '야옹이' }];
+
+
+console.log(objects);
+console.log(objects[0]);
+console.log(objects[1]);
+
+을 하게 되면, { name: '멍멍이' }, { name: '야옹이' } 순으로 나온다.
+
+
+<b> 2. 배열에서 새 항목 추가하기 </b>
+
+배열에 새로운 항목을 추가할 때에는 배열이 지니고 있는 내장함수인 <b>push</b> 함수를 사용한다.
+
+const objects = [{ name: '멍멍이' }, { name: '야옹이' }];
+
+objects.push({
+  name: '멍뭉이'
+});
+
+console.log(objects);
+
+를 실행하면, 멍멍이 야옹이 멍뭉이 순서대로 출력된다.
+
+<b> 3. 배열의 크기 알아내기 </b>
+
+배열의 크기를 알아낼 때에는 배열의 <b>length</b> 값을 확인한다.
+
+const objects = [{ name: '멍멍이' }, { name: '야옹이' }];
+
+console.log(objects.length);
+
+objects.push({
+  name: '멍뭉이'
+});
+
+console.log(objects.length);
+
+를 실행해보면, 2와 3이 출력될 것이다. push가 되면 length 값이 커진다.
+
+<b> * #반복문 </b>
+
+반복문은 특정 작업을 반복적으로 할 때 사용할 수 있는 구문이다.
+
+<b>1. for</b>
+
+for 반복문은 가장 기본적인 반복문이다. 특정 값에 변화를 줘가면서 우리가 정한 조건이 만족된다면 계속 반복한다.
+
+for (let i=0; i < 10; i++) {
+
+  console.log(i);
+
+}
+
+를 실행하면, 0부터 9까지 10줄에 걸쳐 출력된다.
+
+for문은 다음과 같이 사용한다.
+
+
+for (초기 구문; 조건 구문; 변화 구문;) {
+
+  코드
+
+}
+
+for문을 사용할 때 보통 i++ 를 해서 1씩 증감하는 형태로 사용한다. 물론 1씩 빼는 형태도 가능하다. i--를 하면 됨. 이때는
+
+for (let i = 10; i > 0; i--) 가 돼야겠지?
+
+for문은 이렇게 숫자에 변화를 줘가면서 반복적으로 작업을 실행한다.
+
+
+<b>2. 배열과 for</b>
+
+우리가 이전에 배운 배열과 for문을 함께 활용해보자. 
+
+const names = ['멍멍이', '야옹이', '멍뭉이'];
+
+for (let i=0; i < names.length; i++) {
+
+  console.log(names[i]);
+
+}
+
+이렇게 하면, names 배열 안에 있는 원소들을 하나하나 나열할 수 있다.
+
+<b>3. while</b>
+
+while문은 특정 조건이 참이라면 계속해서 반복하는 반복문이다.
+
+for문은, <b>특정 숫자를 갖고 숫자의 값을 비교하고 증감해주면서 반복을 하는 방식</b>이라면, while문은 <b>조건을 확인만 하면서 반복을 한다.</b> 때문에, 조건문 내부에서 변화를 직접 주어야 한다.
+
+0~9를 출력하는 while 반복문을 작성해보자.
+
+let i=0;
+
+while (i < 10) {
+
+  console.log(i);
+
+  i++;
+
+}
+
+while문을 사용할 때에는 조건문이 언젠가 false가 되도록 신경써야 한다. 만약에 언젠가 false로 전환되는 방식이 아니라면 반복문이 끝나지 않고 영원히 반복되는 무한루프가 될 것이다.
+
+
+<b>4. for...of</b>
+
+for...of 문은 배열에 관한 반복문을 돌리기 위해서 만들어진 반복문이다.
+
+let numbers = [10, 20, 30, 40, 50];
+
+for (let number of numbers) {
+
+  console.log(number);
+
+}
+
+하면 배열의 첫 번째 값부터 순서대로 출력된다.
+
+
+<b>5. 객체를 위한 반복문 for...in</b>
+
+객체를 위한 반복문을 알아보기 전에, 객체의 정보를 배열 형태로 받아올 수 있는 함수 몇가지를 알아보자.
+
+const doggy = {
+
+  name: '멍멍이',
+
+  sound: '멍멍',
+
+  age: 2
+
+};
+
+console.log(Object.entries(doggy));
+
+console.log(Object.keys(doggy));
+
+console.log(Object.values(doggy));
+
+를 하면... 
+
+0 : Array[2]
+
+  0 : "name"
+
+  1 : "멍멍이"
+
+1 : Array[2]
+
+  0 : "sound"
+
+  1 : "멍멍"
+
+2 : Array[2]
+
+  0 : "age"
+
+  1 : 2
+
+["name", "sound", "age"]
+
+["멍멍이", "멍멍", 2]
+
+순으로 출력이 된다.. 즉,
+
+Object.entries -> [[키, 값], [키, 값]] 형태의 배열로 변환
+
+Object.keys : [키, 키, 키] 형태의 배열로 변환
+
+Object.values : [값, 값, 값] 형태의 배열로 변환
+
+객체가 지니고 있는 값에 대해 반복을 하고 싶다면 위 함수들을 사용해도 되고, for...in 구문을 사용해도 된다.
+
+const doggy = {
+
+  name: '멍멍이',
+
+  sound: '멍멍',
+
+  age: 2
+
+};
+
+for (let key in doggy) {
+
+  console.log(`${key}: ${doggy[key]}`);
+
+}
+
+
+<b>6. break와 continue</b>
+
+반복문 안에서는 break와 continue를 통하여 반복문에서 벗어나거나, 그 다음 루프를 돌게끔 할 수 있다.
+
+for (let i=0; i < 10; i++) {
+
+  if (i === 2) continue; // 다음 루프를 실행
+
+  console.log(i);
+
+  if (i === 5) break; // 반복문 끝내기
+
+}
+
+i가 2 일때는 continue를 하여 원래 console.log를 해야 하지만 그 코드를 수행하지 않고 바로 3으로 넘어간다.
+
+i가 5일 땐 break 를 하여 반복문을 종료시킨다.
+
+<b>7. 연습</b>
+
+numbers라는 배열을 파라미터로 받아서 총합을 구하는 함수를 만들어보자.
+
+function sumOf(numbers) {
+
+  let sum = 0;
+
+  for (let i=0; i < numbers.length; i++) {
+
+    sum = sum + numbers[i];
+
+  }
+
+  return sum
+
+}
+
+const result = sumOf([1, 2, 3, 4, 5]);
+
+console.log(result);
+
+결과는 15이다.
+
+* 숫자로 이루어진 배열이 주어졌을 때 해당 숫자 배열 안에 들어있는 숫자 중 3보다 큰 숫자로만 이루어진 배열을 만들어서 반환해보자.
+
+function biggerThanThree(numbers) {
+
+  let array = []
+
+  for (let i=0; i<numbers.length; i++) {
+ 
+    if (numbers[i] > 3) {
+ 
+      array.push(numbers[i])
+ 
+    }
+ 
+  }
+ 
+  return array;
+
+}
+
+const numbers = [1, 2, 3, 4, 5, 6, 7];
+
+console.log(biggerThanThree(numbers)); // [4, 5, 6, 7]
+
+
+
+<b> * #배열 내장함수 </b>
+
+이번에는 배열을 다룰 때 알고 있으면 너무나 유용한 내장 함수들에 대해 알아볼 것.
+
+<b>1. forEach</b>
+
+forEach 는 가장 쉬운 배열 내장함수이다. 기존에 배웠던 for문을 대체할 수 있다. 예를 들어 다음과 같은 텍스트 배열이 있다고 가정해 보자.
+
+const superheroes = ['아이언맨', '캡틴 아메리카', '토르', '닥터 스트레인지'];
+
+만약 배열 안에 있는 모든 원소들을 모두 출력해야 한다면 for문을 사용해서 다음과 같이 구현할 수 있다.
+
+const superheroes = ['아이언맨', '캡틴 아메리카', '토르', '닥터 스트레인지'];
+
+for (let i=0; i < superheroes.length; i++) {
+
+  console.log(superheroes[i]);
+
+}
+
+배열의 forEach 함수를 사용하면 다음과 같이 구현할 수 있다.
+
+const superheroes = ['아이언맨', '캡틴 아메리카', '토르', '닥터 스트레인지'];
+
+superheroes.forEach(hero => {
+  console.log(hero);
+});
+
+forEach 함수의 파라미터로는, 각 원소에 대해 처리하고 싶은 코드를 함수로 넣어준다. 이 함수의 파라미터 hero는 각 원소를 가리키게 된다.
+
+이렇게 함수 형태의 파라미터를 전달하는 것을 콜백함수 라고 한다. 함수를 등록해주면, forEach가 실행을 해주는 것!
+
+<b>2. map</b>
+
+map은 배열 안의 각 원소를 변환할 때 사용되며, 이 과정에서 새로운 배열이 만들어진다.
+
+예를 들어서 다음과 같은 배열이 있다고 가정해 보자.
+
+const array = [1, 2, 3, 4, 5, 6, 7, 8];
+
+만약에 배열 안의 모든 숫자를 제곱해서 새로운 배열을 만들고 싶다면, 어떻게 해야될까? map 함수를 사용하지 않고 지금까지 배운 것을 활용하면, 다음과 같이 구현할 수 있다.
+
+
+const array = [1, 2, 3, 4, 5, 6 ,7 ,8];
+
+const squared = [];
+
+for (let i=0; i < array.length; i++) {
+
+  squared.push(array[i] * array[i]);
+
+}
+
+console.log(squared);
+
+forEach를 구현해서도 만들 수 있다.
+
+const array = [1, 2, 3, 4, 5, 6 ,7 ,8];
+
+const squared = [];
+
+array.forEach(n => {
+
+  squared.push(n * n);
+
+});
+
+console.log(squared);
+
+결과는 [1, 4, 9, 16, 25, 36, 49, 64]이다.
+
+
+만약 map을 사용하면, 이를 더 짧은 코드를 사용하여 구현할 수 있다.
+
+const array = [1, 2, 3, 4, 5, 6, 7, 8];
+
+const square = n => n * n;
+
+const squared = array.map(square);
+
+console.log(squared);
+
+map 함수의 파라미터로는 변화를 주는 함수를 전달해 준다. 이를 변화함수라고 부른다.
+
+현재 우리의 변화함수 square는 파라미터 n을 받아와서 이를 제곱해 준다.
+
+array.map 함수를 사용할 때 square를 변화함수로 사용함으로써 내부의 모든 값에 대해 제곱을 해서 새로운 배열을 생성했다.
+
+변화함수를 꼭 이름을 붙여서 선언할 필요는 없다.
+
+const squared = array.map(n => n * n);
+console.log(sqaured);
+
+<b>3. indexOf</b>
+
+indexOf는, 원하는 항목이 몇 번째 원소인지 찾아주는 함수이다.
+
+예를 들어서 다음과 같은 배열이 있을 때,
+
+const superheroes = ['아이언맨', '캡틴 아메리카', '토르', '닥터 스트레인지'];
+
+토르가 몇 번째 항목인지 알고싶다고 가정하자. 그렇다면,
+
+const superheroes = ['아이언맨', '캡틴 아메리카', '토르', '닥터 스트레인지'];
+
+const index = superheroes.indexOf('토르');
+
+console.log(index);
+
+와 같이 입력할 수 있다. 결과는 2가 나온다.
+
+<b>4. findIndex</b>
+
+만약에 배열 안에 있는 값이 <b>숫자, 문자열, 또는 불리언</b>이라면, 찾고자 하는 항목이 몇 번째 원소인지 알아내려면 indexOf를 사용하면 된다. 하지만, 배열 안에 있는 값이 객체이거나, 배열이라면 indexOf로 찾을 수 없다.
+
+다음과 같은 배열이 있다고 가정해 보자.
+
+const todos = [
+
+  {
+
+    id: 1,
+
+    text: '자바스크립트 입문',
+
+    done: true
+
+  },
+
+  {
+
+    id: 2,
+
+    text: '함수 배우기',
+
+    done: true
+
+  },
+
+  {
+
+    id: 3,
+
+    text: '객체와 배열 배우기',
+
+    done: true
+
+  },
+
+  {
+
+    id: 4,
+
+    text: '배열 내장함수 배우기',
+
+    done: false
+
+  }
+
+];
+
+
+여기서 만약 id가 3인 객체가 몇번째인지 찾으려면, findIndex 함수에 검사하고자 하는 조건을 반환하는 함수를 넣어서 찾을 수 있다.
+
+const index = todos.findIndex(todo => todo.id === 3);
+console.log(index); 하면
+
+결과는 2가 나타난다.
+
+<b>5. find</b>
+
+find 함수는, findIndex 랑 비슷한데, 찾아낸 값이 몇번째인지 알아내는 것이 아니라, 찾아낸 값 자체를 반환한다.
+
+위 함수에서 ..
+
+const todo = todos.find(todo => todo.id === 3);
+
+console.log(todo);
+
+하면 .. 결과는
+
+{id : 3, text : "객체와 배열 배우기", done: true}
+
+<b>6. filter</b>
+
+filter 함수는 배열에서 특정 조건을 만족하는 값들만 따로 추출하여 새로운 배열을 만든다. 예를 들어서, 우리가 방금 만들었던 todos 배열에서 done의 값이 false인 항목들만 따로 추출해서 새로운 배열을 만들어 보자.
+
+위 함수에서 ..
+
+const tasksNotDone = todos.filter(todo => todo.done === false);
+
+console.log(taskNotDone);
+
+결과는 ..
+
+[
+
+
+  {
+
+    id: 4,
+
+    text: "배열 내장 함수 배우기",
+
+    done: false
+
+  }
+
+];
+
+가 된다.
+
+filter 함수에 넣는 파라미터는 조건을 검사하는 함수를 넣어주며, 이 함수의 파라미터로 각 원소의 값을 받아오게 된다.
+
+const tasksNotDone = todos.filter(todo => todo.done === false); 를
+
+const tasksNotDone = todos.filter(todo => !todo.done); 으로 바꿀 수도 있다.
+
+<b>7. splice</b>
+
+splice는 배열에서 특정 항목을 제거할 때 사용한다.
+
+const numbers = [10, 20, 30, 40];
+
+위 배열에서 30을 지운다고 가정해 보자. 그러면, 30이 몇 번째 index인지 알아낸 이후 이를 splice를 통해 지울 수 있다.
+
+const numbers = [10, 20, 30, 40];
+
+const index = numbers.indexOf(30);
+
+numbers.splice(index, 1);
+
+console.log(numbers);
+
+결과는 [10, 20, 40] 이 나온다.
+
+<b>numbers.splice(index, 1)</b> 에서 .. 
+
+splice를 사용할 때 첫 번째 파라미터 (위에선 index)는 어떤 인덱스를 지울지를 의미하고(즉 numbers.indexOf(30)을 지운다는 것) 두번째 파라미터는 그 인덱스부터 몇개를 지울지를 의미한다(즉 30부터 1개를 지운다는 것).
+
+<b>8. slice</b>
+
+slice는 splice랑 조금 비슷하다. 배열을 잘라낼 때 사용하는데, 중요한 점은 기존의 배열을 건드리지 않는다는 점이다.
+
+const numbers = [10, 20, 30, 40];
+
+const sliced = numbers.slice(0, 2); // 0부터 시작해서 2 전까지
+
+
+console.log(sliced); // 10, 20
+
+console.log(numbers); // 10, 20, 30, 40
+
+
+const sliced = numbers.slice(0, 2); 에서 slice에는 두 개의 파라미터를 넣게 되는데, 첫 번째 파라미터는 어디서부터 자를지(즉 여기선 0번째 인덱스부터 자른다는 것), 그리고 두번째 파라미터는 어디까지 자를지를 의미한다.(즉 여기선 2-1번째 인덱스까지 자른다는 것)
+
+<b>9. shift와 pop</b>
+
+shift와 pop은, 비슷하지만 조금 다르다.
+
+shift는, 첫 번째 원소를 배열에서 추출해 준다.(추출하는 과정에서 배열에서 해당 원소는 사라짐!!)
+
+const numbers = [10, 20, 30, 40];
+
+const value = numbers.shift();
+
+console.log(value);
+
+console.log(numbers);
+
+를 하면, 
+
+10
+
+[20, 30, 40] 이 출력된다. 즉 기존 배열에서 shift로 빼낸 원소는 없어지는 것이다.
+
+pop은 다 똑같은데, 첫 번쨰 원소를 추출하는 shift와 달리 pop은 맨 마지막 항목을 추출한다. (물론 기존 배열에서 pop으로 빼낸 원소는 사라진다.)
+
+즉 결과는
+
+40
+
+[10, 20, 30] 이 되는 것.
+
+
+<b>10. unshift</b>
+
+unshift는 shift의 반대이다. <b>배열의 맨 앞에 새로운 원소를 추가한다.</b>
+
+const numbers = [10, 20, 30, 40];
+
+numbers.unshift(5);
+console.log(numbers); 하면
+
+[5, 10, 20, 30, 40]이 된다.
+
+<b>11. concat</b>
+
+concat은, 여러개의 배열을 하나의 배열로 합쳐준다.
+
+const arr1 = [1, 2, 3];
+const arr2 = [4, 5, 6];
+const concated = arr1.concat(arr2);
+
+console.log(concated);
+
+하게 되면 결과는 [1, 2, 3, 4, 5, 6]; 이 된다.
+
+<b>concat 함수는 arr1과 arr2에 변화를 주지 않는다.</b>
+
+
+<b>12. join</b>
+
+join은 배열 안의 값들을 문자열 형태로 합쳐준다.
+
+const array = [1, 2, 3, 4, 5];
+
+console.log(array.join()); // 1,2,3,4,5
+
+console.log(array.join(' ')); // 1 2 3 4 5
+
+console.log(array.join(', )); // 1, 2, 3, 4, 5
+
+
+<b>13. reduce</b>
+
+reduce 함수는 잘 사용할 줄 알면 정말 유용한 내장 함수이다. 만약 주어진 배열에 대해 총합을 구해야 하는 상황이 왔다고 가정해 보자.
+
+const numbers = [1, 2, 3, 4, 5];
+
+let sum = 0;
+
+numbers.forEach(n => {
+
+  sum = sum + n;
+
+});
+
+con sole.log(sum);
+
+
+을 하면 결과는 15가 된다.
+
+여기서 sum을 계산하기 위해 사전에 sum을 선언하고,forEach를 통해 계속 덧셈을 해줬는데,
+
+reduce라는 함수를 사용하면 다음과 같이 구현할 수 있다.
+
+const numbers= [1, 2, 3, 4, 5];
+
+let sum = numbers.reduce((accumulator, current) => accumulator + current, 0);
+
+console.log(sum);
+
+numbers.reduce((accumulator, current) => accumulator + current, 0); 에서 reduce 함수는 2개의 파라미터를 전달한다.
+
+첫번째 파라미터((accumulator, current) => accumulator + current)는 accumulator와 current를 파라미터로 가져와서 결과를 반환하는 콜백 함수이다. 
+
+두 번째 파라미터는 reduce 함수에서 사용할 초깃값이다.
+
+방금 작성한 함수는,
+
+const numbers = [1, 2, 3, 4, 5];
+let sum = numbers.reduce((accumulator, current) => {
+  console.log({ accumulator, current });
+  return accumulator + current;
+}, 0);
+
+console.log(sum);
+
+이 코드의 실행 결과는 ..
+
+Object {accumulator : 0, current : 1}
+
+Object {accumulator : 1, current : 2}
+
+Object {accumulator : 3, current : 3}
+
+Object {accumulator : 6, current : 4}
+
+Object {accumulator : 10, current : 5}
+
+15
+
+가 나온다.
+
+배열을 처음부터 끝까지 반복하면서 우리가 전달한 콜백 함수가 호출이 되는데, 가장 처음엔 accumulator 값이 0이다. 이 값이 0인 이유는 우리가 두 번째 파라미터인 초깃값으로 0을 설정했기 때문.
+
+처음 콜백 함수가 호출되면, 0 + 1을 해서 1이 반환된다. 이렇게 1이 반환되면 그 다음 번에 콜백함수가 호출될 때 accumulator 값으로 사용된다.
+
+콜백함수가 두번째로 호출될 땐 1+2를 해서 3이 되고, 이 값이 세 번째로 호출될 때의 accumulator가 된다.
+
+그래서 쭉 누적돼서 최종 결과물 15가 나타나는 것.
+
+
+* reduce 를 사용해서 평균도 계산할 수 있다. 평균을 계산하려면 가장 마지막 숫자를 더하고 나서 배열의 length로 나눠줘야 한다.
+
+const numbers = [1, 2, 3, 4, 5];
+
+let sum = numbers.reduce((accumulator, current, index, 
+array) => {
+
+  if (index === array.length - 1) {
+
+    return (accumulator + current) / array.length;
+
+  }
+
+  return accumulator + current;
+
+}, 0);
+
+console.log(sum);
+
+을 하면, 결과는 3이 된다.
+
+위 코드의 reduce에서 사용한 콜백함수에서는 추가 파라미터로 index와 array를 받아왔다. index는 현재 처리하고 있는 항목이 몇번째인지 가리키고, array는 현재 처리하고 있는 배열 자신을 의미한다.
+
+
+function countBiggerThanTen(numbers) {
+  let count = 0;
+  numbers.forEach(n => {
+    if (n > 10) {
+      count = count + 1;
+    }
+  });
+  return count;
+}
+
+const count = countBiggerThanTen([1, 2, 3, 5 ,10, 20, 30, 40, 50, 60);
+console.log(count); // 5
+
+function countBiggerThanTen(numbers) {
+  let count = [];
+  if (numbers[i] > 10) {
+    count.push(numbers[i]);
+  }
+  return count;
+}
