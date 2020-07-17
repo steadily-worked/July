@@ -1787,3 +1787,299 @@ cat.say();
 
 상속을 할 때에는 extends 키워드를 사용하며, constructor에서 사용하는 super() 함수가 상속받은 클래스의 생성자를 가리킨다.
 
+
+
+
+///////////////////
+
+7/17 코드잇
+
+<b>for문과 while문의 차이??</b>
+
+이분법적으로 나눌 수 있는 얘기는 아니지만, 일반적으로 반복 횟수가 예측 가능할 때에는 for문을 사용하는 것이 눈에 더 잘 들어온다. 반대로 반복 횟수를 예측할 수 없으면 while문을 사용하는 게 더 적합한 경우가 많다.
+
+<b> * 2. 인터랙티브 웹 시작하기 </b>
+
+1 - HTML, CSS와의 콜라보레이션
+
+1) HTML의 해결사, 자바스크립트
+
+
+<a onclick="alert('hello');">Seoul</a> 코드를 봐보자.
+
+a 요소가 클릭됐을 때 해당 JavaScript 코드가 실행되는 것이다.
+
+<a onclick="document.getElementById('photo').src = 'images/seoul.png';">Seoul</a> 를 봐보자.
+
+document는, 기존 페이지를 뜻하고, getElementById는 Id를 통해 element를 get하라는 뜻. 즉 photo를 통해 요소를 받아오라는 뜻.
+
+<img id = 'photo' src='images/home.png' width='90%'>
+
+이 img 태그가 저 안에 들어가게 되는 것이다. 그리고 src 값은 기존의 home.png가 아닌, seoul.png로 바뀌게 된다. 나머지 성질은 그대로 다 동일하게 들어감.(width='90%')
+
+<a onclick="document.getElementById('photo').src = 'images/home.png';">Seoul</a> 
+
+<a onclick="document.getElementById('photo').src = 'images/tokyo.png';">Seoul</a> 
+
+<a onclick="document.getElementById('photo').src = 'images/paris.png';">Seoul</a> 
+
+설정을 해줌으로써 전부 다 바뀌게 된다.
+
+
+2) 코드를 함수로 빼기
+
+<script>
+
+// 사진을 바꿔주는 함수
+
+function clickSeoul() {
+
+document.getElementById('photo').src = 'images/seoul.png';
+
+}
+
+</script>
+
+로 아래 부분에 따로 script 부분을 만들어준 뒤에,
+
+기존의 <a onclick="document.getElementById('photo').src = 'images/seoul.png';">Seoul</a> 에서
+
+"" 내 부분을 다 지우고 <a onclick="clickSeoul();">Seoul</a> 로 바꿔준다.
+
+마찬가지로 clickHome, clickParis, clickTokyo를 다 만들어준 뒤에 
+
+<a onclick="clickHome();">Home</a>
+
+<a onclick="clickSeoul();">Seoul</a>
+
+<a onclick="clickTokyo();">Tokyo</a>
+
+<a onclick="clickParis();">Paris</a>
+
+로 바꿔준다. 이렇게 되면 코드가 한층 간결해진다.
+
+
+4) jQuery
+
+JavaScript 문법을 한층 간결하게 -> jQuery를 이용하면 됨.
+
+function clickSeoul() {
+
+  document.getElementById('photo').src = 'images/seoul.png'; 대신에
+
+  $('#photo').attr('src', 'images/seoul.png'); 로 해준다.
+
+}
+
+여기서 attr은, attribute의 약자인데, attr 메소드는, 이 요소의 속성을 바꿔주는 역할을 한다. 파라미터로 src와 images/~을 넘겨주면, 이 요소의 src를 images/~로 바꿔주는 것!
+<script>
+
+function clickHome() {
+
+$('#photo').attr('src', 'images/home.png');
+
+$('#seoul').css('font-weight', 'normal');
+
+$('#home').css('font-weight', 'bold');
+
+$('#tokyo').css('font-weight', 'normal');
+
+$('#paris').css('font-weight', 'normal');
+
+}
+
+function clickSeoul() {
+
+$('#photo').attr('src', 'images/seoul.png');
+
+$('#seoul').css('font-weight', 'bold');
+
+$('#home').css('font-weight', 'normal');
+
+$('#tokyo').css('font-weight', 'normal');
+
+$('#paris').css('font-weight', 'normal');
+
+}
+
+function clickTokyo() {
+
+$('#photo').attr('src', 'images/tokyo.png');
+
+$('#seoul').css('font-weight', 'normal');
+
+$('#home').css('font-weight', 'normal');
+
+$('#tokyo').css('font-weight', 'bold');
+
+$('#paris').css('font-weight', 'normal');
+
+}
+
+function clickParis() {
+
+$('#photo').attr('src', 'images/paris.png');
+
+$('#seoul').css('font-weight', 'normal');
+
+$('#home').css('font-weight', 'normal');
+
+$('#tokyo').css('font-weight', 'normal');
+
+$('#paris').css('font-weight', 'bold');
+
+}
+
+</script>
+
+이렇게 바꿔주면 확실히 이전보다 훨씬 간결해진 것을 볼 수 있다.
+
+
+5) jQuery를 설치하는 방법
+
+1. 링크 사용
+
+<script></script> 태그 바로 윗줄에 jQuery CDN의 코드를 붙여 넣어주는 방법.
+
+<script
+
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+
+  crossorigin="anonymous"></script>
+
+<script>
+
+// 우리 자바스크립트 코드...
+
+</script>
+
+이런 식으로 .. 작성해주면 인터넷에 있는 원격 jQuery CDN 코드를 내 프로젝트로 가져오게 된다.
+
+2. 직접 jQuery 코드를 다운
+
+이건 직접 페이지 들어가서 다운받으면 되는데, 전자가 더 빠르고 간편하므로 생략한다.
+
+
+6) 이벤트(event)
+
+HTML 요소에게 일어날 수 있는 일들
+
+- 사용자가 요소를 클릭
+
+- 마우스가 요소 위로 올라오고 밖으로 나가는 것 등 ..
+
+event handling(이벤트 핸들링)은, 예를 들어 .. 키보드에서 q를 누르면 게임이 끝나는 경우.
+
+이때 q를 누르는 것이 이벤트이고 게임이 끝나는 게 이벤트핸들링이다.
+
+
+사진에 마우스를 올리면 그림자가 생기는 이벤트 핸들링을 해보자.
+
+// 사진에 그림자 
+
+<script>
+
+
+function mouseEnterPhoto() {
+
+  $('#photo').css('box-shadow', '5px 10px');
+
+}
+
+</script>
+
+를 해주고, <img id='photo' src='images/home.png' width='90%' onmouseenter='mouseEnterPhoto();'> 를 써보자. 그러면 적용된다.
+
+마우스가 요소 밖으로 나가는 경우에도 따로 없어지는 이벤트 핸들링을 작성해줘야 한다.
+
+<script>
+
+function mouseLeavePhoto() {
+
+
+  $('#photo').css('box-shadow', 'none');
+
+}
+
+</script>
+
+을 해준 후 <img id='photo' src='images/home.png' width='90%' onmouseenter='mouseEnterPhoto();' onmouseleave='mouseLeavePhoto();'> 를 추가해주면, 마우스가 사진 밖으로 벗어났을 때 그림자가 사라지게 된다.
+
+
+7) 이벤트 핸들링(Event Handling)
+
+html 부분에는 js 코드를 최대한 적게 넣어야 깔끔해보인다.
+
+<a id='home'>Home</a>
+
+<a id='seoul'>Seoul</a>
+
+<a id='tokyo'>Tokyo</a>
+
+<a id='paris'>Paris</a>
+
+
+로 바꿔주고, (onclick 뒷부분을 없앴다)
+
+<script>
+
+$('#home').on('click', clickHome);
+
+$('#seoul').on('click', clickSeoul);
+
+$('#tokyo').on('click', clickTokyo);
+
+$('#paris').on('click', clickParis);
+
+</script>
+
+로 바꿔줘도 잘 된다.
+
+id가 home인 요소에 on이라는 메소드를 사용. 첫째 파라미터는 'click'인데, 이것은 onclick과 같은 효과를 보인다. 즉, click했을 때 clickHome을 실행시키라는 뜻이 된다.
+
+마찬가지로 ..
+
+
+$('#photo').on('mouseenter', mouseEnterPhoto);
+
+$('#photo').on('mouseleave', mouseLeavePhoto); 를 해준다. 그렇게 되면
+
+html에서 js 코드는 다 빠지면서 똑같이 기능은 유지하게 된다. 
+
+
+8) 키보드 이벤트
+
+숫자 1을 누르면 home, 2 -> seoul, 3 -> tokyo, 4 -> paris로 바뀌게끔 해보자
+
+$(document).on('keydown', processKeyEvent);
+
+이 코드를 보자. keydown은, 키보드를 누르는 이벤트를 의미한다. document는, click이나 mouseenter의 경우 해당 링크를 클릭했을 때 요소를 실행시키고 싶었던 건데, 키보드는 특정 링크에만 일어나는 게 아니라 우리 페이지 전체에서 일어나는 것이므로 $(document)라고 해줘야 한다.
+
+이제 processKeyEvent를 써주자.
+
+// 키보드 이벤트 핸들링
+
+function processKeyEvent(event) {
+
+  if (event['key'] === '1') {
+
+    clickHome();
+
+  } else if (event['key'] === '2') {
+
+    clickSeoul();
+
+  } else if (event['key'] === '3') {
+
+    clickTokyo();
+
+  } else if (event['key'] === '4') {
+
+    clickParis();
+
+  }
+
+}
+를 해주면, 1에서 4까지를 눌렀을 때 Home에서 Paris까지로 이동이 된다.
