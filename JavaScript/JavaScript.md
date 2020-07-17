@@ -810,7 +810,7 @@ setter 함수를 설정하고 나면, {'numbers.a = 5'} 이렇게 값을 설정�
 이전의 객체에서는 nubmers.sum이 조회될 때마다 덧셈이 이루어 졌었지만, 이제는 <b>a 혹은 b의 값이 바뀔 때마다 sum 값을 연산</b>한다.
 
 
-<b> * #배열 </b>
+<b> * 배열 </b>
 
 이전에 배운 객체는, 한 변수 혹은 상수(ex. a나 b 등)에 여러가지 정보를 담기 위함이었다면, <b>배열은 여러 개의 항목들이 들어있는 리스트</b>와 같다.
 
@@ -872,7 +872,7 @@ console.log(objects.length);
 
 를 실행해보면, 2와 3이 출력될 것이다. push가 되면 length 값이 커진다.
 
-<b> * #반복문 </b>
+<b> * 반복문 </b>
 
 반복문은 특정 작업을 반복적으로 할 때 사용할 수 있는 구문이다.
 
@@ -1093,7 +1093,7 @@ console.log(biggerThanThree(numbers)); // [4, 5, 6, 7]
 
 
 
-<b> * #배열 내장함수 </b>
+<b> * 배열 내장함수 </b>
 
 이번에는 배열을 다룰 때 알고 있으면 너무나 유용한 내장 함수들에 대해 알아볼 것.
 
@@ -1531,3 +1531,259 @@ function countBiggerThanTen(numbers) {
   }
   return count;
 }
+
+
+<b> * 프로토타입과 클래스 </b>
+
+<b>1. 객체 생성자</b>
+
+프로토타입과 클래스에 대해 알아보기 전에 우선 객체 생성자라는 것을 알아보자.객체 생성자는 함수를 통해 새로운 객체를 만들고 그 안에 넣고 싶은 값 혹은 함수들을 구현할 수 있게 해준다.
+
+function Animal(type, name, sound) {
+
+  this.type = type;
+
+  this.name = name;
+
+  this.sound = sound;
+
+  this.say = function() {
+
+    console.log(this.sound);
+
+  };
+
+}
+
+const dog(새로운 객체) = <b>new</b> Animal('개', '멍멍이', '멍멍');
+
+const cat(새로운 객체) = <b>new</b> Animal('고양이', '야옹이', '야옹');
+
+dog.say();
+
+cat.say();
+
+
+결과는 멍멍<br>야옹
+
+이 나온다.
+
+객체 생성자를 사용할 때는 보통 함수의 이름을 대문자로 시작하고, 새로운 객체를 만들 때에는 new 키워드를 앞에 붙여줘야 한다.
+
+지금 위 코드를 보면, dog가 가지고 있는 say 함수와 cat이 가지고 있는 수행 코드가 똑같음에도 불구하고 객체가 생성될 때마다 함수로 새로 만들어져서 this.say로 설정이 되고 있다.
+
+같은 객체 생성자 함수를 사용하는 경우, 특정 함수 또는 값<b>(위 코드에선 this.say가 되겠다)</b>을 재사용할 수 있는데 이게 바로 프로토타입(prototype)이다.
+
+<b>2. 프로토타입</b>
+
+프로토타입은 다음과 같이 객체 생성자 함수 아래에
+
+''.prototype.[원하는키] = 코드'' 를 입력하여 설정할 수 있다.
+
+function Animal(type, name, sound) {
+
+  this.type = type;
+
+  this.name = name;
+
+  this.sound = sound;
+
+}
+
+
+Animal.prototype.say = function() {
+
+  console.log(this.sound);
+
+};
+
+Animal.prototype.sharedValue = 1; 
+
+
+const dog = new Animal('개', '멍멍이', '멍멍');
+
+const cat = new Animal('고양이', '야옹이', '야옹');
+
+dog.say();
+
+cat.say();
+
+console.log(dog.sharedValue);
+
+console.log(cat.sharedValue);
+
+
+결과는 ..
+
+멍멍<br>야옹<br>1<br>1<br>
+
+
+<b>3. 객체 생성자 상속받기</b>
+
+예를 들어 우리가 Cat과 Dog라는 새로운 객체 생성자를 만든다고 가정해보자. 그리고, 해당 객체 생성자들에서 Animal의 기능을 재사용한다고 가정해보자. 그렇다면 ..
+
+function Animal(type, name, sound) {
+
+  this.type = type;
+
+  this.name = name;
+
+  this.sound = sound;
+
+}
+
+
+Animal.prototype.say = function() {
+
+  console.log(this.sound);
+
+};
+
+Animal.prototype.sharedValue = 1;
+
+
+function Dog(name, sound) {
+
+  Animal.call(this, '개', name, sound);
+
+}
+
+Dog.prototype = Animal.prototype;
+
+
+function Cat(name, sound) {
+
+  Animal.call(this, '고양이', name, sound);
+
+}
+
+
+Cat.prototype = Animal.prototype;
+
+
+const dog = new Dog('멍멍이', '멍멍');
+
+const cat = new Cat('야옹이', '야옹');
+
+
+dog.say();
+
+cat.say();
+
+
+새로 만든 Dog와 Cat 함수에서
+
+(Animal.call(this, '고양이', name, sound);)
+
+Animal.call을 호출해주고 있는데, 여기서 첫번째 인자에는 this를 넣어 줘야 하고, 그 이후에는 Animal 객체 생성자 함수에서 필요로 하는 파라미터를 넣어줘야 한다.
+
+추가적으로 prototype을 공유해야 하기 때문에 상속받은 객체 생성자 함수를 만들고 나서 prototype 값을 Animal.prototype으로 설정해주었다.
+
+(Cat. prototype = Animal.prototype;)
+
+
+<b>4. 클래스</b>
+
+
+클래스라는 기능은 C++, Java, C#, PHP 등의 다른 프로그래밍 언어에는 있는 기능인데, 자바스크립트에는 없었기 때문에 예전 자바스크립트(ES5) 에서는 위에서 작성한 코드처럼 객체 생성자 함수를 사용하여 비슷한 작업을 구현해 왔다.
+
+
+ES6에서는 class라는 문법이 추가되었는데, 우리가 객체 생성자로 구현했던 코드를 좀더 명확하고 깔끔하게 구현할 수 있게 해준다. 추가적으로, 상속도 훨씬 쉽게 해준다.
+
+
+class Animal {
+
+  constructor(type, name, sound) {
+
+    this.type = type;
+
+    this.name = name;
+
+    this.sound = sound;
+
+  }
+
+  say() {
+
+    console.log(this.sound);
+
+  }
+
+}
+
+
+const dog = new Animal('개', '멍멍이', '멍멍');
+
+const cat = new Animal('고양이', '야옹이', '야옹');
+
+
+dog.say();
+
+cat.say();
+
+
+여기서 우리가 say 라는 함수를 클래스 내부에 선언했는데, 클래스 내부 함수를 '메소드'라고 부른다. 이렇게 메소드를 만들면 자동으로 prototype으로 등록이 된다.
+
+결과는 .. <br>멍멍<br>야옹
+
+class를 사용했을 때에는, 다른 클래스를 쉽게 상속할 수 있다.
+
+
+class Animal {
+
+  constructor (type,name,sound) {
+
+    this.type = type;
+
+    this.name = name;
+
+    this.sound = sound;
+
+  }
+
+  say() {
+
+    console.log(this.sound);
+
+  }
+
+}
+
+
+
+class Dog extends Animal {
+
+  constructor(name, sound) {
+
+    super('개', name, sound);
+
+  }
+
+}
+
+
+
+class Cat extends Animal {
+
+  constructor(name, sound) {
+
+    super('고양이', name, sound);
+
+  }
+
+}
+
+
+const dog = new Dog('멍멍이', '멍멍');
+
+const cat = new Cat('야옹이', '야옹');
+
+
+dog.say();
+
+cat.say();
+
+결과물은 ..<br>멍멍<br>야옹<br>
+
+상속을 할 때에는 extends 키워드를 사용하며, constructor에서 사용하는 super() 함수가 상속받은 클래스의 생성자를 가리킨다.
+
